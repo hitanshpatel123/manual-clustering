@@ -3,6 +3,7 @@ import seaborn as sns
 from seaborn import scatterplot
 import matplotlib.pyplot as plt
 
+
 customers = pd.read_csv('mall_customers.csv')
 print(customers.head())
 print(customers.describe())
@@ -25,18 +26,19 @@ def fetch_coordinates(df):
 
 age_centroid_1, score_centroid_1, age_centroid_2, score_centroid_2 =fetch_coordinates(centroids)
 
+#################################### testing + understanding ############################
 figure , ax = plt.subplots()
 ax.scatter(customers['Age'],customers['Spending Score'])
 ax.scatter(centroids['Age'],centroids['Spending Score'], s = 100, c= 'Black')
 plt.show()
 
+#####################################################################################
 def calculate_distance(row, coord_1, coord_2):
     dist = np.sqrt((row[0]-coord_1)**2 + (row[1]-coord_2)**2)
     return dist
 
 customers['dist_centroid_1'] = customers.apply(calculate_distance, args = [age_centroid_1, score_centroid_1], axis = 1)
 customers['dist_centroid_2'] = customers.apply(calculate_distance, args = [age_centroid_2, score_centroid_2], axis = 1)
-
 
 def calculate_distance_assign_clusters(customers, centroids):
     age_centroid_1, score_centroid_1, age_centroid_2, score_centroid_2 = fetch_coordinates(centroids)
@@ -47,6 +49,7 @@ def calculate_distance_assign_clusters(customers, centroids):
     
     return customers
 
+#################################### testing + understanding ############################
 customers = calculate_distance_assign_clusters(customers, centroids)
 
 figure, ax = plt.subplots()
